@@ -31,13 +31,13 @@ class InspectAddress(object):
         try:
             res = requests.post(logurl, data=data)
             if res.status_code==200:
-                print '开发平台账户登录-成功'
+                print u'开发平台账户登录-成功'
                 value = res.cookies['laravel_session']
             else:
-                print '开发平台账户登录-失败'
+                print u'开发平台账户登录-失败'
 
         except:
-            print '开发平台账户登录-失败'
+            print u'开发平台账户登录-失败'
 
         cookies = {u'domain': u'.bidinghuo.cn',
                    u'secure': False,
@@ -60,14 +60,14 @@ class InspectAddress(object):
         }
         value = ''
         try:
-            res = requests.post(logurl, data=data)
+            res = requests.post(logurl,data=data)
             if res.status_code==200:
-                print '品牌商账户登录-成功'
+                print u'品牌商账户登录-成功'
                 value = res.cookies['laravel_session']
             else:
-                print '品牌商账户登录-失败'
+                print u'品牌商账户登录-失败'
         except:
-            print '品牌商账户登录-失败'
+            print u'品牌商账户登录-失败'
         cookies = {u'domain': u'.bidinghuo.cn',
                    u'secure': False,
                    u'value': value,
@@ -85,16 +85,16 @@ class InspectAddress(object):
             self.driver.get(url)
             self.driver.set_page_load_timeout(30)
         except:
-            print '访问品牌商管理开发平台-异常'
+            print u'访问品牌商管理开发平台-异常'
 
         try:
             page = self.driver.page_source
             page_soup = BeautifulSoup(page)
             username = page_soup.find_all(class_='user-name')[0]
             assert username.string==config.developers_account[0]
-            print '品牌商管理开发平台-访问正常'
+            print u'品牌商管理开发平台-访问正常'
         except:
-            print '品牌商管理开发平台-访问异常'
+            print u'品牌商管理开发平台-访问异常'
 
 
     def brand_platform(self):
@@ -108,9 +108,9 @@ class InspectAddress(object):
             nsgj_title = BeautifulSoup(self.driver.page_source).find_all(class_='ovh')[1].h2.string
             assert bdh_title == u'必订火'
             assert nsgj_title == u'内审管家'
-            print '访问品牌商后台-正常'
+            print u'访问品牌商后台-正常'
         except:
-            print '访问品牌商后台-异常'
+            print u'访问品牌商后台-异常'
         try:
             page = self.driver.page_source
             nsgj_href = self.driver.find_element_by_xpath(
@@ -122,18 +122,19 @@ class InspectAddress(object):
             self.driver.set_page_load_timeout(30)
             dhh_title = BeautifulSoup(self.driver.page_source).find_all(class_='meeting-name text-overflow')[0].string
             assert dhh_title==u'测试订货会'
-            print '访问品牌商订货会-正常'
+            print u'访问品牌商订货会-正常'
         except:
-            print '访问品牌商订货会-异常'
+            print u'访问品牌商订货会-异常'
         try:
             assert requests.get(bdh_href).status_code == 200
             self.driver.get(nsgj_href)
             self.driver.set_page_load_timeout(30)
             nsh_title = BeautifulSoup(self.driver.page_source).find_all(class_='meeting-name text-overflow')[0].string
             assert nsh_title==u'认同与人体'
-            print '访问品牌商内审管家-正常'
+            print u'访问品牌商内审管家-正常'
         except:
-            print '访问品牌商内审管家-异常'
+            print u'访问品牌商内审管家-异常'
+
 
 if __name__=='__main__':
      inspadd = InspectAddress()
